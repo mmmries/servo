@@ -1,32 +1,16 @@
 # Servo
 
-**TODO: Add description**
+A basic example of controlling a servo with nerves.
+This project targets a raspberry pi zero and expect you to connect the servo's wires like this:
 
-## Targets
+* Ground => Any ground on the Pi
+* Power => Pin 1 on the pi (3.3v power pin)
+* Signal => Pin 12 on the pi (BCM 18)
 
-Nerves applications produce images for hardware targets based on the
-`MIX_TARGET` environment variable. If `MIX_TARGET` is unset, `mix` builds an
-image that runs on the host (e.g., your laptop). This is useful for executing
-logic tests, running utilities, and debugging. Other targets are represented by
-a short name like `rpi3` that maps to a Nerves system image for that platform.
-All of this logic is in the generated `mix.exs` and may be customized. For more
-information about targets see:
+Then you can run commands like:
 
-https://hexdocs.pm/nerves/targets.html#content
-
-## Getting Started
-
-To start your Nerves app:
-  * `export MIX_TARGET=my_target` or prefix every command with
-    `MIX_TARGET=my_target`. For example, `MIX_TARGET=rpi3`
-  * Install dependencies with `mix deps.get`
-  * Create firmware with `mix firmware`
-  * Burn to an SD card with `mix firmware.burn`
-
-## Learn more
-
-  * Official docs: https://hexdocs.pm/nerves/getting-started.html
-  * Official website: https://nerves-project.org/
-  * Forum: https://elixirforum.com/c/nerves-forum
-  * Discussion Slack elixir-lang #nerves ([Invite](https://elixir-slackin.herokuapp.com/))
-  * Source: https://github.com/nerves-project/nerves
+```elixir
+Pigpiox.GPIO.set_servo_pulsewidth(18, 2000) # set the servo to its maximum throw in one direction
+Pigpiox.GPIO.set_servo_pulsewidth(18, 1000) # set the servo to its maximum throw in the other direction
+Pigpiox.GPIO.set_servo_pulsewidth(18, 0) # stop powering the servo (let is rest so its not drawing power)
+```
